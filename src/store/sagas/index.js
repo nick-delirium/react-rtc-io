@@ -1,40 +1,46 @@
-import { takeEvery, all } from 'redux-saga/effects'
+import { takeEvery, all } from 'redux-saga/effects';
+import SimpleWebRTC from 'simplewebrtc';
 
 const handleNewMessage = function* handleNewMessage(params) {
   yield all([
-    takeEvery("ADD_MESSAGE", (action) => {
+    takeEvery('ADD_MESSAGE', action => {
       const msg = {
         room: action.path,
         message: action.message,
-        author: action.author
-      }
-      console.log(action)
-      params.socket.emit("msg", msg)
+        author: action.author,
+      };
+      console.log(action);
+      params.socket.emit('msg', msg);
     }),
-    takeEvery("APPLY_USER", ({obj}) => {
+    takeEvery('APPLY_USER', ({ obj }) => {
       const path = window.location.pathname;
       const { userName, roomId } = obj;
-      console.log("HELLO",obj); 
-      if (path === "/") {
+      if (path === '/') {
         const msg = {
           roomId: roomId,
-          userName: userName
-        }
-        console.log(msg, "2nd step")
-        params.socket.emit("newroom", msg)
+          userName: userName,
+        };
+        params.socket.emit('newroom', msg);
       } else {
-        const room = path.slice(1);
-        console.log(room)
+        const roomId = path.slice(1);
         const msg = {
-          roomId: room,
-          userName: userName
-        }
-        params.socket.emit("joinroom", msg)
+          roomId: roomId,
+          userName: userName,
+        };
+        params.socket.emit('joinroom', msg);
       }
-    })
-  ])
-}
+      const rtcRoom = roomId || path.slice(1);
+      const webrtc = new SimpleWebRTC({
+        localVideoEl: 'localVideo',
+        remoteVideosEl: 'remoteVideos',
+        autoRequestMedia: true,
+        media: { audio: true, video: true },
+      });
+      webrtc.on('readyToCall', function() {
+        webrtc.joinRoom(`#${rtcRoom}`);
+      });
+    }),
+  ]);
+};
 
-
-
-export default handleNewMessage
+export default handleNewMessage;
