@@ -1,32 +1,81 @@
-.App {
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+    font-family: "Press Start 2P";
+}
+#container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-areas: "sidebar main";
+    width: 100vw;
+    height: 100vh;
+}
+#main {
+    grid-area: main;
+}
+
+.login {
+  margin: 20px auto;
+  width: 300px;
+  padding: 30px 25px;
+  background: white;
+  border: 1px solid #c4c4c4;
+}
+
+.login-input {
+  width: 100%;
+  height: 50px;
+  margin-bottom: 25px;
+  padding-left:10px;
+  font-size: 15px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.login-input:focus {
+    border-color:#6e8095;
+    outline: none;
+  }
+.login-button {
+  width: 100%;
+  height: 50px;
+  padding: 0;
+  font-size: 20px;
+  color: #fff;
   text-align: center;
+  background: #f0776c;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer; 
+  outline:0;
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+#new-message {
+    position: fixed;
+    bottom: 0;
+    height: 100px;
+    width: 75vw;
+    padding: 5px;
+    margin-left: 0px;
+    border-top: 1px solid #3f3f3f;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.header {
+  margin-bottom: 5px;
+  
 }
-
-.App-link {
-  color: #61dafb;
+.text-area {
+  width: 100%;
+  height: 95%;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#messages-list {
+    padding: 5px 0 0 5px;
+}
+#sidebar {
+    grid-area: sidebar;
+    padding: 5px 0 0 5px;
+    border-right: 1px solid #3f3f3f;
+    height: 100%;
+    width:25vw;
 }
