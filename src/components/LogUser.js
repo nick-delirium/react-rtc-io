@@ -1,8 +1,10 @@
 import React from 'react';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 const rand = function() {
-  return Math.random().toString(36).substr(2); // remove `0.`
+  return Math.random()
+    .toString(36)
+    .substr(2); // remove `0.`
 };
 
 const token = function() {
@@ -10,9 +12,9 @@ const token = function() {
 };
 
 class LogUser extends React.Component {
-    state = {
-      userName: '',
-    };
+  state = {
+    userName: '',
+  };
   handleInputChange = e => {
     this.setState({ userName: e.target.value });
   };
@@ -24,10 +26,10 @@ class LogUser extends React.Component {
   commit = () => {
     const applyObject = {
       userName: this.state.userName,
-      roomId: null
-    }
-    if (window.location.pathname === "/") {
-      applyObject.roomId = token()
+      roomId: null,
+    };
+    if (window.location.pathname === '/') {
+      applyObject.roomId = token();
     }
     if (applyObject.userName.length === 0) return;
     this.props.dispatch(applyObject);
@@ -52,7 +54,7 @@ class LogUser extends React.Component {
 
 LogUser.propTypes = {
   userName: PropTypes.string,
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default LogUser;

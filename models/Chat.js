@@ -20,7 +20,7 @@ class Chat {
     });
   }
   removeRoom(id) {
-    this.rooms = this.rooms.filter(item => item.id !== id)
+    this.rooms = this.rooms.filter(item => item.id !== id);
   }
 }
 

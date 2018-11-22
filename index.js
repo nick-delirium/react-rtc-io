@@ -19,28 +19,31 @@ app.get('*', (req, res) => {
 
 io.on('connection', socket => {
   socket.on('newroom', ({ roomId, userName }) => {
-    clients = addClient(clients, userName, socket, roomId)
+    clients = addClient(clients, userName, socket, roomId);
     socket.join(roomId);
     const room = new Room(roomId);
     // const user = new User(userName); <- can be used to make user-specific actions
     room.addUser(userName);
     chat.addRoom(room);
-    io.to(roomId).emit('getpath', roomId)
-    io.to(roomId).emit('message', { message: `your room ID is ${roomId}. Share it with others so they can join!`, author: "system" });
+    io.to(roomId).emit('getpath', roomId);
+    io.to(roomId).emit('message', {
+      message: `your room ID is ${roomId}. Share it with others so they can join!`,
+      author: 'system',
+    });
   });
-  socket.on('joinroom', ({roomId, userName}) => {
+  socket.on('joinroom', ({ roomId, userName }) => {
     socket.join(roomId);
-    clients = addClient(clients, userName, socket, roomId)
+    clients = addClient(clients, userName, socket, roomId);
     const room = chat.getRoom(roomId);
     if (room) {
       room.addUser(userName);
       chat.updateRoom(room);
       const users = room.getPool();
-      io.to(roomId).emit('getpath', roomId)
+      io.to(roomId).emit('getpath', roomId);
       io.to(roomId).emit('getnewuser', userName);
       io.to(roomId).emit('allusers', users);
     }
-  })
+  });
   socket.on('msg', msg => {
     io.to(msg.room).emit('message', { message: msg.message, author: msg.author });
   });
@@ -52,7 +55,7 @@ io.on('connection', socket => {
       const userName = clients[i].userName;
       const room = chat.getRoom(roomId);
       room.removeUser(userName);
-      if (room.getPool().length === 0) chat.removeRoom(roomId)
+      if (room.getPool().length === 0) chat.removeRoom(roomId);
       else chat.updateRoom(room);
 
       io.to(roomId).emit('rmuser', userName);
@@ -68,9 +71,9 @@ function addClient(sockets, userName, socket, room) {
   const client = {
     userName: userName,
     room: room,
-    socket: socket
-  }
+    socket: socket,
+  };
   const newSockets = sockets;
-  newSockets.push(client)
+  newSockets.push(client);
   return newSockets;
 }

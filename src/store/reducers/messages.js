@@ -1,18 +1,21 @@
-const messages = (state = [{message: "Feelin' empty a bit y'ah?", author: "system", id: 0}], action) => {
+const messages = (
+  state = [{ message: "Feelin' empty a bit y'ah?", author: 'system', id: 0 }],
+  action
+) => {
   switch (action.type) {
     case 'ADD_MESSAGE':
-      return state
+      return state;
     case 'MESSAGE_RECEIVED':
       return state.concat([
         {
           message: action.message,
           author: action.author,
-          id: action.id
-        }
-      ])
+          id: action.id,
+        },
+      ]);
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default messages
+export default messages;
