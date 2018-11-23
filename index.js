@@ -5,7 +5,7 @@ const io = require('socket.io')(http);
 const path = require('path');
 
 const Chat = require('./models/Chat.js');
-// const User = require("./models/User.js"); <- can be used to make user-specific actions
+// const User = require("./models/User.js"); // <- can be used to make user-specific actions
 const Room = require('./models/Room.js');
 
 const chat = new Chat();
@@ -22,12 +22,15 @@ io.on('connection', socket => {
     clients = addClient(clients, userName, socket, roomId);
     socket.join(roomId);
     const room = new Room(roomId);
-    // const user = new User(userName); <- can be used to make user-specific actions
+    // const user = new User(userName); // <- can be used to make user-specific actions
     room.addUser(userName);
     chat.addRoom(room);
     io.to(roomId).emit('getpath', roomId);
+    const date = new Date();
+    const when = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
     io.to(roomId).emit('message', {
       message: `your room ID is ${roomId}. Share it with others so they can join!`,
+      when: when,
       author: 'system',
     });
   });
@@ -45,7 +48,7 @@ io.on('connection', socket => {
     }
   });
   socket.on('msg', msg => {
-    io.to(msg.room).emit('message', { message: msg.message, author: msg.author });
+    io.to(msg.room).emit('message', { message: msg.message, when: msg.when, author: msg.author });
   });
 
   socket.on('disconnect', function() {

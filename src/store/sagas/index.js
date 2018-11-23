@@ -7,9 +7,9 @@ const handleNewMessage = function* handleNewMessage(params) {
       const msg = {
         room: action.path,
         message: action.message,
+        when: action.when,
         author: action.author,
       };
-      console.log(action);
       params.socket.emit('msg', msg);
     }),
     takeEvery('APPLY_USER', ({ obj }) => {

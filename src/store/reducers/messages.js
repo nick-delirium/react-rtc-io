@@ -9,6 +9,7 @@ const messages = (
       return state.concat([
         {
           message: action.message,
+          when: action.when,
           author: action.author,
           id: action.id,
         },

@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Message = ({ message, author }) => (
+const Message = ({ message, when, author }) => (
   <p>
-    <i>{author}</i>: {message}
+    <i>{when}&nbsp;</i><b>{author}</b>: {message}
   </p>
 );
 

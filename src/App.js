@@ -9,8 +9,6 @@ import { AddMessage } from './containers/AddMessage.js';
 import VideoComms from './components/VideoComms.js';
 
 class App extends Component {
-  componentDidMount() {
-  }
   state = {
     connection: false,
     timestamp: null,

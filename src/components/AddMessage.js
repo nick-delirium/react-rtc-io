@@ -6,7 +6,9 @@ const AddMessage = props => {
   console.log(props.currentUser);
   const sendMessage = e => {
     if (e.key === 'Enter') {
-      props.dispatch(input.value, props.currentUser, props.path);
+      const date = new Date();
+      const when = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+      props.dispatch(input.value, when, props.currentUser, props.path);
       input.value = '';
     }
   };

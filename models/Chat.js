@@ -15,8 +15,8 @@ class Chat {
     this.rooms = this.rooms.map(item => {
       if (item.id === room.id) {
         item = room;
-        return item;
       }
+      return item;
     });
   }
   removeRoom(id) {
